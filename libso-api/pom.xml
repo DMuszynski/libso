@@ -2,44 +2,79 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>pl.dmuszynski</groupId>
 	<artifactId>libso-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
 	<name>libso-api</name>
 	<description>Backend web application of libso online store</description>
 
+	<parent>
+		<groupId>pl.dmuszynski</groupId>
+		<artifactId>libso</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<properties>
 		<java.version>11</java.version>
+		<java.jwt.version>3.10.3</java.jwt.version>
+		<flyway.core.verson>6.5.6</flyway.core.verson>
+		<modelmapper.version>2.3.8</modelmapper.version>
+		<maven.compiler.target>1.11</maven.compiler.target>
+		<maven.compiler.source>1.11</maven.compiler.source>
+		<spring.boot.version>2.3.4.RELEASE</spring.boot.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mysql.connector.java.version>8.0.20</mysql.connector.java.version>
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>${spring.boot.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
+			<version>${spring.boot.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring.boot.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring.boot.version}</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -47,6 +82,35 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${flyway.core.verson}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${java.jwt.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.java.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
@@ -58,5 +122,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
