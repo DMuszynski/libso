@@ -3,11 +3,10 @@ package pl.dmuszynski.libso.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
 import java.util.Collection;
-import java.util.List;
 
+@Entity
 public class User extends AbstractEntity implements UserDetails {
 
     private String email;
@@ -22,13 +21,18 @@ public class User extends AbstractEntity implements UserDetails {
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
     public String getPassword() {
         return password;
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
     @Override
@@ -44,10 +48,5 @@ public class User extends AbstractEntity implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return isEnabled;
     }
 }
