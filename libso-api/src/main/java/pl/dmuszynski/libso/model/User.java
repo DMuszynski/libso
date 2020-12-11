@@ -1,23 +1,54 @@
 package pl.dmuszynski.libso.model;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import lombok.experimental.SuperBuilder;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Entity;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
+import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
+@SuperBuilder
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User extends AbstractEntity implements UserDetails {
 
     private String email;
+
     private String username;
+
     private String password;
-    private boolean isLocked;
-    private boolean isEnabled;
+
+    private boolean locked;
+
+    private boolean enabled;
+
+    @CreatedDate
+    private LocalDateTime creationDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Address> addresses;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Transaction> transactions;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private Set<Authority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
@@ -32,21 +63,21 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return enabled;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isLocked;
+        return !locked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 }

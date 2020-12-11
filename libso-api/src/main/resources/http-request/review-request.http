@@ -1,0 +1,24 @@
+### Add product review
+POST http://localhost:8080/libso/products/1/reviews
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "grade" : 0,
+  "reviewComment" : "really good product"
+}
+
+### Update product review
+PUT http://localhost:8080/libso/products/1/reviews/1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : 1,
+  "grade" : 1,
+  "reviewComment" : "very durable"
+}
+
+### Delete review
+DELETE http://localhost:8080/libso/products/1/reviews/1
+Authorization: Bearer {{auth_token}}

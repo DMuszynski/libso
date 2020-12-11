@@ -1,0 +1,36 @@
+### Find all users
+GET http://localhost:8080/libso/users?page=0&size=2
+Authorization: Bearer {{auth_token}}
+
+### Update user locked
+PATCH http://localhost:8080/libso/users/1/locked
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : 1,
+  "locked": true
+}
+
+### Update user authorities
+PATCH http://localhost:8080/libso/users/2/authorities
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : 2,
+  "authorities": [
+    {
+      "id" : 1,
+      "authority": "ROLE_USER"
+    },
+    {
+      "id" : 2,
+      "authority": "ROLE_MODERATOR"
+    },
+    {
+      "id" : 3,
+      "authority": "ROLE_ADMIN"
+    }
+  ]
+}

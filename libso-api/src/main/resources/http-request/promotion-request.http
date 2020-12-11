@@ -1,0 +1,26 @@
+### Add product promotion
+POST http://localhost:8080/libso/products/2/promotions
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "percentValue" : 20,
+  "startDate" : "2001-02-02T10:00:00",
+  "endDate" : "2001-03-01T23:00:00"
+}
+
+### Update product promotion
+PUT http://localhost:8080/libso/products/1/promotions/1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : 1,
+  "percentValue" : 40,
+  "startDate" : "2001-03-02T15:00:00",
+  "endDate" : "2001-04-02T00:00:00"
+}
+
+### Delete promotion
+DELETE http://localhost:8080/libso/products/1/promotions/1
+Authorization: Bearer {{auth_token}}

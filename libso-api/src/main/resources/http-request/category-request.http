@@ -1,0 +1,27 @@
+### Add category
+POST http://localhost:8080/libso/categories
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name" : "Dom i ogród",
+  "parent" : null
+}
+
+### Update category
+PUT http://localhost:8080/libso/categories/1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : "1",
+  "name" : "Telefony"
+}
+
+### Find categories
+GET http://localhost:8080/libso/categories
+Authorization: Bearer {{auth_token}}
+
+### Delete category
+DELETE http://localhost:8080/libso/categories/2
+Authorization: Bearer {{auth_token}}

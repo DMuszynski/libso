@@ -1,0 +1,32 @@
+### Add user address
+POST http://localhost:8080/libso/users/1/addresses
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "country" : "Poland",
+  "location" : "Kielce",
+  "zipCode" : "30-000",
+  "street" : "Warszawska 3"
+}
+
+### Update address
+PUT http://localhost:8080/libso/users/1/addresses/1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : "1",
+  "country" : "German",
+  "location" : "Berlin",
+  "zipCode" : "20-000",
+  "street" : "street"
+}
+
+### Find addresses
+GET http://localhost:8080/libso/users/1/addresses
+Authorization: Bearer {{auth_token}}
+
+### Delete address
+DELETE http://localhost:8080/libso/users/1/addresses/1
+Authorization: Bearer {{auth_token}}

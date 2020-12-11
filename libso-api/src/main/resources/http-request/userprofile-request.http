@@ -1,0 +1,23 @@
+### Change user password
+PATCH http://localhost:8080/libso/users/1/password
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : "1",
+  "password" : "newPassword"
+}
+
+### Change user email
+PATCH http://localhost:8080/libso/users/1/email
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id" : "1",
+  "email" : "libso.user2@gmail.com"
+}
+
+### Delete user
+DELETE http://localhost:8080/libso/users/1
+Authorization: Bearer {{auth_token}}

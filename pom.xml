@@ -13,5 +13,6 @@
 
     <modules>
         <module>libso-api</module>
+<!--        <module>libso-ng-app</module>-->
     </modules>
 </project>
