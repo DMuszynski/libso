@@ -16,6 +16,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "libso/categories")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -35,8 +36,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<CategoryView>> findAllCategoryDto(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "id") String sortBy) {
-        final Set<CategoryView> foundCategoryDtoList = this.categoryService.findAllCategoryDto(page, size, sortBy);
+    public ResponseEntity<Set<CategoryView>> findAllCategoryDto() {
+        final Set<CategoryView> foundCategoryDtoList = this.categoryService.findAllCategoryDto();
         if (!foundCategoryDtoList.isEmpty())
             return new ResponseEntity<>(foundCategoryDtoList, HttpStatus.OK);
         else

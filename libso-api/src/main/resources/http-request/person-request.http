@@ -11,7 +11,7 @@ Authorization: Bearer {{auth_token}}
 }
 
 ### Update person
-PUT http://localhost:8080/libso/users/1/persons/1
+PUT http://localhost:8080/libso/users/22/persons/22
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
@@ -24,7 +24,7 @@ Authorization: Bearer {{auth_token}}
 }
 
 ### Find person
-GET http://localhost:8080/libso/users/1/persons/1
+GET http://localhost:8080/libso/users/21/persons/21
 Authorization: Bearer {{auth_token}}
 
 ### Delete person

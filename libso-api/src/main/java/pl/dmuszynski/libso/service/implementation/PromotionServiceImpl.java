@@ -2,18 +2,18 @@ package pl.dmuszynski.libso.service.implementation;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import pl.dmuszynski.libso.mapper.PromotionMapper;
+import pl.dmuszynski.libso.payload.PromotionView;
 import pl.dmuszynski.libso.repository.PromotionRepository;
 import pl.dmuszynski.libso.validator.PromotionValidator;
-import pl.dmuszynski.libso.validator.ProductValidator;
 import pl.dmuszynski.libso.payload.dto.PromotionDTO;
 import pl.dmuszynski.libso.service.PromotionService;
-import pl.dmuszynski.libso.mapper.PromotionMapper;
 import pl.dmuszynski.libso.model.Promotion;
-import pl.dmuszynski.libso.model.Product;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.List;
 import java.time.LocalDate;
@@ -26,19 +26,16 @@ public class PromotionServiceImpl implements PromotionService {
     private final PromotionRepository promotionRepository;
     private final PromotionValidator promotionValidator;
     private final PromotionMapper promotionMapper;
-    private final ProductValidator productValidator;
     private final EntityManager entityManager;
 
     @Override
-    public PromotionDTO createProductPromotion(PromotionDTO productPromotionDetails, Long productId) {
-        this.productValidator.validateExistModelById(productId);
+    public PromotionDTO createPromotion(PromotionDTO promotionDetails) {
         final Promotion createdProductPromotion = this.promotionRepository.save(
             Promotion.builder()
-                .percentValue(productPromotionDetails.getPercentValue())
-                .startDate(productPromotionDetails.getStartDate())
-                .endDate(productPromotionDetails.getEndDate())
-                .product(this.entityManager
-                    .getReference(Product.class, productId))
+                .name(promotionDetails.getName())
+                .percentValue(promotionDetails.getPercentValue())
+                .startDate(promotionDetails.getStartDate())
+                .endDate(promotionDetails.getEndDate())
                 .build()
         );
 
@@ -46,16 +43,15 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public PromotionDTO updateProductPromotionById(PromotionDTO productPromotionDetails, Long productId, Long promotionId) {
-        this.promotionValidator.validateProductPromotionIds(promotionId, productPromotionDetails.getId(), productId);
+    public PromotionDTO updatePromotionById(PromotionDTO promotionDetails, Long promotionId) {
+        this.promotionValidator.validateModelAndModelDtoIds(promotionId, promotionDetails.getId());
         final Promotion updatedProductPromotion = this.promotionRepository.save(
             Promotion.builder()
-                .id(productPromotionDetails.getId())
-                .percentValue(productPromotionDetails.getPercentValue())
-                .startDate(productPromotionDetails.getStartDate())
-                .endDate(productPromotionDetails.getEndDate())
-                .product(this.entityManager
-                    .getReference(Product.class, productId))
+                .id(promotionDetails.getId())
+                .name(promotionDetails.getName())
+                .percentValue(promotionDetails.getPercentValue())
+                .startDate(promotionDetails.getStartDate())
+                .endDate(promotionDetails.getEndDate())
                 .build()
         );
 
@@ -63,8 +59,15 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public void deleteProductPromotionById(Long productId, Long promotionId) {
-        this.promotionValidator.validateProductPromotionIds(promotionId, productId);
+    public Set<PromotionView> findAllPromotionView() {
+        return this.promotionRepository.findAll().stream()
+            .map(this.promotionMapper::mapToDto)
+            .collect(Collectors.toSet());
+    }
+
+    @Override
+    public void deletePromotionById(Long promotionId) {
+        this.promotionValidator.validateExistModelById(promotionId);
         this.entityManager.remove(this.entityManager.getReference(Promotion.class, promotionId));
     }
 

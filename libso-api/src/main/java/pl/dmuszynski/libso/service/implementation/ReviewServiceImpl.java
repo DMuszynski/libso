@@ -1,5 +1,6 @@
 package pl.dmuszynski.libso.service.implementation;
 
+import pl.dmuszynski.libso.model.User;
 import pl.dmuszynski.libso.repository.ReviewRepository;
 import pl.dmuszynski.libso.validator.ProductValidator;
 import pl.dmuszynski.libso.validator.ReviewValidator;
@@ -33,9 +34,11 @@ public class ReviewServiceImpl implements ReviewService {
         this.productValidator.validateExistModelById(productId);
         final Review createdProductReview = this.reviewRepository.save(
             Review.builder()
-                .grade(productReviewDetails.getGrade())
+                .plusRate(productReviewDetails.getPlusRate())
+                .minusRate(productReviewDetails.getMinusRate())
                 .reviewComment(productReviewDetails.getReviewComment())
                 .product(this.entityManager.getReference(Product.class, productId))
+                .user(this.entityManager.getReference(User.class, productReviewDetails.getUsernameDTO().getId()))
                 .build()
         );
 
@@ -49,13 +52,32 @@ public class ReviewServiceImpl implements ReviewService {
         final Review updatedProductReview = this.reviewRepository.save(
             Review.builder()
                 .id(productReviewDetails.getId())
-                .grade(productReviewDetails.getGrade())
+                .plusRate(productReviewDetails.getPlusRate())
+                .minusRate(productReviewDetails.getMinusRate())
                 .reviewComment(productReviewDetails.getReviewComment())
+                .creationDate(productReviewDetails.getCreationDate())
                 .product(this.entityManager.getReference(Product.class, productId))
+                .user(this.entityManager.getReference(User.class, productReviewDetails.getUsernameDTO().getId()))
                 .build()
         );
 
         return this.reviewMapper.mapToDto(updatedProductReview);
+    }
+
+    @Override
+    @Transactional
+    public ReviewDTO updateReviewPlusRate(Long productId, Long reviewId) {
+        final Review updateReview = this.reviewRepository.findById(reviewId).orElseThrow();
+        updateReview.setPlusRate(updateReview.getPlusRate() + 1);
+        return this.reviewMapper.mapToDto(updateReview);
+    }
+
+    @Override
+    @Transactional
+    public ReviewDTO updateReviewMinusRate(Long productId, Long reviewId) {
+        final Review updateReview = this.reviewRepository.findById(reviewId).orElseThrow();
+        updateReview.setMinusRate(updateReview.getMinusRate() + 1);
+        return this.reviewMapper.mapToDto(updateReview);
     }
 
     @Override

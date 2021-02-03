@@ -10,11 +10,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PromotionDTO extends AbstractDTO implements PromotionView {
 
+    private String name;
+
     private int percentValue;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
 
     @Override
     public int getPercentValue() {

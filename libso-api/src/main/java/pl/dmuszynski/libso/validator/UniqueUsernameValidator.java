@@ -13,6 +13,6 @@ public class UniqueUsernameValidator {
 
     public void validate(String username) throws UniqueUsernameException {
         if (this.userRepository.existsByUsername(username))
-            throw new UniqueUsernameException("The user with given username " + username + " is already exist");
+            throw new UniqueUsernameException("Użytkownik z podanym nickiem już istnieje");
     }
 }

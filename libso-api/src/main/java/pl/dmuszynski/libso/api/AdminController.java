@@ -16,17 +16,12 @@ import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize(value = "hasRole('ADMIN')")
 @RequestMapping(value = "libso/users")
+@PreAuthorize(value = "hasRole('ADMIN')")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
 
     private final AdminService adminService;
-
-    @PatchMapping(value = "/{userId}/locked")
-    public ResponseEntity<UserLockedView> updateUserLockedById(@RequestBody UserLockedDTO userLockedDetails, @PathVariable Long userId) {
-        final UserLockedDTO updateUserLockedDto = this.adminService.updateUserLockedById(userLockedDetails, userId);
-        return new ResponseEntity<>(updateUserLockedDto, HttpStatus.OK);
-    }
 
     @PatchMapping(value = "/{userId}/authorities")
     public ResponseEntity<UserAuthoritiesView> updateUserAuthoritiesById(@RequestBody UserAuthoritiesDTO userAuthoritiesDetails, @PathVariable Long userId) {
@@ -35,8 +30,8 @@ public class AdminController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<AuthorizedUserView>> findAllAuthorizedUserView(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "username") String sortBy) {
-        final Set<AuthorizedUserView> foundAuthorizedUserDtoList = this.adminService.findAllAuthorizedUserView(page, size, sortBy);
+    public ResponseEntity<Set<AuthorizedUserView>> findAllAuthorizedUserView() {
+        final Set<AuthorizedUserView> foundAuthorizedUserDtoList = this.adminService.findAllAuthorizedUserView();
         if (!foundAuthorizedUserDtoList.isEmpty())
             return new ResponseEntity<>(foundAuthorizedUserDtoList, HttpStatus.OK);
         else

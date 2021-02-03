@@ -8,6 +8,8 @@ import java.util.Set;
 public interface ReviewService {
     ReviewDTO createProductReview(ReviewDTO productReviewDetails, Long productId);
     ReviewDTO updateProductReviewById(ReviewDTO productReviewDetails, Long productId, Long reviewId);
+    ReviewDTO updateReviewPlusRate(Long productId, Long reviewId);
+    ReviewDTO updateReviewMinusRate(Long productId, Long reviewId);
     Set<ReviewView> findAllProductReviewDtoByProductId(Long productId);
     void deleteProductReviewById(Long productId, Long reviewId);
 }

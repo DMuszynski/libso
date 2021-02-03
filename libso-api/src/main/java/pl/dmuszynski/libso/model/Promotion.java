@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -13,13 +14,24 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Promotion extends AbstractEntity {
 
+    private String name;
+
     private int percentValue;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
-    private Product product;
+    @ManyToMany
+    @JoinTable(name = "product_promotion", joinColumns = @JoinColumn(name = "promotion_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+    private Set<Product> products;
+
+//    @ManyToMany(mappedBy = "promotions")
+//    private Set<Product> product;
+
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 }

@@ -7,7 +7,6 @@ import pl.dmuszynski.libso.payload.AuthorizedUserView;
 import java.util.Set;
 
 public interface AdminService {
-    UserLockedDTO updateUserLockedById(UserLockedDTO userLockedDetails, Long userId);
     UserAuthoritiesDTO updateUserAuthoritiesById(UserAuthoritiesDTO userAuthoritiesDetails, Long userId);
-    Set<AuthorizedUserView> findAllAuthorizedUserView(int page, int size, String sortBy);
+    Set<AuthorizedUserView> findAllAuthorizedUserView();
 }

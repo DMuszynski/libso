@@ -18,6 +18,12 @@ public class Category extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Category parent;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany
+    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Set<Product> products;
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 }

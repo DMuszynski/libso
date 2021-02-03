@@ -10,7 +10,13 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserAuthoritiesDTO extends AbstractDTO implements UserAuthoritiesView {
 
+    private boolean locked;
     private Set<AuthorityDTO> authorities;
+
+    @Override
+    public boolean isLocked() {
+        return locked;
+    }
 
     @Override
     public Set<AuthorityDTO> getAuthorities() {

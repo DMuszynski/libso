@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Projection(name = "promotionView", types = Promotion.class)
 public interface PromotionView extends EntityView {
+    String getName();
     int getPercentValue();
     LocalDate getStartDate();
     LocalDate getEndDate();

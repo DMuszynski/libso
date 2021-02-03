@@ -39,6 +39,9 @@ public class User extends AbstractEntity implements UserDetails {
     private Set<Address> addresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Review> reviews;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Transaction> transactions;
 
     @ManyToMany(fetch = FetchType.EAGER)

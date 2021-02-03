@@ -9,5 +9,4 @@ import java.util.Set;
 public interface CategoryView extends EntityView {
     String getName();
     CategoryView getParent();
-//    Set<CategoryView> getSubcategories();
 }

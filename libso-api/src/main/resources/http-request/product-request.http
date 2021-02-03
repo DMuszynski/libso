@@ -8,15 +8,7 @@ Authorization: Bearer {{auth_token}}
   "model" : "AZ61",
   "brand" : "Asus",
   "description" : "Najnowszy model Asus Gaming AZ61",
-  "price" : 3299.99,
-  "categories" :
-  [
-    {
-      "id" : 24,
-      "name" : "Komputery stacjonarne",
-      "parent" : null
-    }
-  ]
+  "price" : 3299.99
 }
 
 ### Update product
@@ -30,21 +22,35 @@ Authorization: Bearer {{auth_token}}
   "model" : "GZ65",
   "brand" : "MSI",
   "description" : "Najnowszy model MSI Gaming GZ65",
-  "price" : 2999.20,
-  "categories" :
-  [
-    {
-      "id" : 24,
-      "name" : "Komputery stacjonarne",
-      "parent" : null
-    }
-  ]
+  "price" : 2999.20
 }
 
-### Find all by category id
-GET http://localhost:8080/libso/products/categories/21
+### Find all product
+GET http://localhost:8080/libso/products
 Authorization: Bearer {{auth_token}}
 
 ### Delete product
 DELETE http://localhost:8080/libso/products/1
 Authorization: Bearer {{auth_token}}
+
+
+### Add product
+#POST http://localhost:8080/libso/products
+#Content-Type: application/json
+#Authorization: Bearer {{auth_token}}
+#
+#{
+#  "name" : "Komputer",
+#  "model" : "AZ61",
+#  "brand" : "Asus",
+#  "description" : "Najnowszy model Asus Gaming AZ61",
+#  "price" : 3299.99,
+#  "categories" :
+#  [
+#    {
+#      "id" : 24,
+#      "name" : "Komputery stacjonarne",
+#      "parent" : null
+#    }
+#  ]
+#}

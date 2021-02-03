@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @PreAuthorize(value = "hasRole('USER')")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "libso/users/{userId}/persons")
 public class PersonController {
 

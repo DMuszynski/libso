@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "libso")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     private final RegistrationService registrationService;
@@ -31,8 +32,8 @@ public class AuthController {
     }
 
     @GetMapping(value = "/token")
-    public ResponseEntity<HttpStatus> activateUser(@RequestParam String value) {
-        this.registrationService.activateAccountByUserToken(value);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> activateUser(@RequestParam String value) {
+        final String activationMessage = this.registrationService.activateAccountByUserToken(value);
+        return new ResponseEntity<>(activationMessage, HttpStatus.OK);
     }
 }

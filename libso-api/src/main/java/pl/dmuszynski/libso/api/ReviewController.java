@@ -13,6 +13,7 @@ import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "libso/products/{productId}/reviews")
 public class ReviewController {
 
@@ -25,10 +26,24 @@ public class ReviewController {
         return new ResponseEntity<>(createdProductReviewDto, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{reviewId}")
+    @PatchMapping(value = "/{reviewId}")
     @PreAuthorize(value = "hasRole('USER')")
     public ResponseEntity<ReviewView> updateProductReviewById(@RequestBody ReviewDTO productReviewDetails, @PathVariable Long productId, @PathVariable Long reviewId) {
         final ReviewDTO updatedProductReviewDto = this.reviewService.updateProductReviewById(productReviewDetails, productId, reviewId);
+        return new ResponseEntity<>(updatedProductReviewDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{reviewId}/plus-rate")
+    @PreAuthorize(value = "hasRole('USER')")
+    public ResponseEntity<ReviewView> updateReviewPlusRate(@PathVariable Long productId, @PathVariable Long reviewId) {
+        final ReviewDTO updatedProductReviewDto = this.reviewService.updateReviewPlusRate(productId, reviewId);
+        return new ResponseEntity<>(updatedProductReviewDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{reviewId}/minus-rate")
+    @PreAuthorize(value = "hasRole('USER')")
+    public ResponseEntity<ReviewView> updateReviewMinusRate(@PathVariable Long productId, @PathVariable Long reviewId) {
+        final ReviewDTO updatedProductReviewDto = this.reviewService.updateReviewMinusRate(productId, reviewId);
         return new ResponseEntity<>(updatedProductReviewDto, HttpStatus.OK);
     }
 

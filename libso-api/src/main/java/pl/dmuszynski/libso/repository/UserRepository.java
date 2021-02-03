@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.dmuszynski.libso.payload.UserPasswordView;
 import pl.dmuszynski.libso.model.User;
+import pl.dmuszynski.libso.payload.UserSettingsView;
 
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<UserPasswordView> findUserPasswordById(Long userId);
 
+    Optional<UserSettingsView> findUserSettingsById(Long userId);
+
     @Modifying
     @Query(value = "UPDATE User u SET u.email = :email WHERE u.id = :id")
     void updateEmailById(@Param("email") String email, @Param("id") Long id);
@@ -29,6 +32,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "UPDATE User u SET u.password = :password WHERE u.id = :id")
     void updatePasswordById(@Param("password") String password, @Param("id") Long id);
+
+    @Modifying
+    @Query(value = "UPDATE User u SET u.username = :username WHERE u.id = :id")
+    void updateUsernameById(@Param("username") String username, @Param("id") Long id);
 
     @Modifying
     @Query(value = "UPDATE User u SET u.enabled = true WHERE u.id = :id")

@@ -1,11 +1,11 @@
 package pl.dmuszynski.libso.payload.dto;
 
-import pl.dmuszynski.libso.model.Promotion;
 import pl.dmuszynski.libso.payload.ProductView;
 import lombok.experimental.SuperBuilder;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @SuperBuilder
@@ -22,9 +22,11 @@ public class ProductDTO extends AbstractDTO implements ProductView {
 
     private BigDecimal price;
 
-    private PromotionDTO promotion;
+    private Set<ImageDTO> images = new HashSet<>();
 
-    private Set<CategoryDTO> categories;
+    private Set<ReviewDTO> reviews = new HashSet<>();
+
+    private Set<PromotionDTO> promotions = new HashSet<>();
 
     @Override
     public String getName() {
@@ -51,11 +53,18 @@ public class ProductDTO extends AbstractDTO implements ProductView {
         return this.price;
     }
 
-    public PromotionDTO getPromotion() {
-        return promotion;
+    @Override
+    public Set<ImageDTO> getImages() {
+        return this.images;
     }
 
-    public Set<CategoryDTO> getCategories() {
-        return this.categories;
+    @Override
+    public Set<ReviewDTO> getReviews() {
+        return this.reviews;
+    }
+
+    @Override
+    public Set<PromotionDTO> getPromotions() {
+        return this.promotions;
     }
 }

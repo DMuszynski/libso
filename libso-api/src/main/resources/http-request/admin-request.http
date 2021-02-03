@@ -1,5 +1,5 @@
 ### Find all users
-GET http://localhost:8080/libso/users?page=0&size=2
+GET http://localhost:8080/libso/users
 Authorization: Bearer {{auth_token}}
 
 ### Update user locked

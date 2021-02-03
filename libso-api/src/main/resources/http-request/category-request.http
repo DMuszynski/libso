@@ -14,8 +14,8 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-  "id" : "1",
-  "name" : "Telefony"
+  "id" : "67",
+  "name" : "Telefony",
 }
 
 ### Find categories
@@ -23,5 +23,5 @@ GET http://localhost:8080/libso/categories
 Authorization: Bearer {{auth_token}}
 
 ### Delete category
-DELETE http://localhost:8080/libso/categories/2
+DELETE http://localhost:8080/libso/categories/67
 Authorization: Bearer {{auth_token}}

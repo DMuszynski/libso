@@ -9,30 +9,44 @@ import pl.dmuszynski.libso.payload.dto.PromotionDTO;
 import pl.dmuszynski.libso.payload.PromotionView;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Set;
+
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize(value = "hasRole('USER')")
-@RequestMapping(value = "libso/products/{productId}/promotions")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(value = "libso/promotions")
 public class PromotionController {
 
     private final PromotionService promotionService;
 
     @PostMapping
-    public ResponseEntity<PromotionView> createProductPromotion(@RequestBody PromotionDTO productPromotionDetails, @PathVariable Long productId) {
-        final PromotionDTO createdProductPromotionDto = this.promotionService.createProductPromotion(productPromotionDetails, productId);
-        return new ResponseEntity<>(createdProductPromotionDto, HttpStatus.CREATED);
+    @PreAuthorize(value = "hasRole('MODERATOR')")
+    public ResponseEntity<PromotionView> createPromotion(@RequestBody PromotionDTO promotionDetails) {
+        final PromotionDTO createdPromotionDto = this.promotionService.createPromotion(promotionDetails);
+        return new ResponseEntity<>(createdPromotionDto, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{promotionId}")
-    public ResponseEntity<PromotionView> updateProductPromotionById(@RequestBody PromotionDTO productPromotionDetails, @PathVariable Long productId, @PathVariable Long promotionId) {
-        final PromotionDTO updatedProductPromotionDto = this.promotionService.updateProductPromotionById(productPromotionDetails, productId, promotionId);
-        return new ResponseEntity<>(updatedProductPromotionDto, HttpStatus.OK);
+    @PreAuthorize(value = "hasRole('MODERATOR')")
+    public ResponseEntity<PromotionView> updatePromotionById(@RequestBody PromotionDTO promotionDetails, @PathVariable Long promotionId) {
+        final PromotionDTO updatedPromotionDto = this.promotionService.updatePromotionById(promotionDetails, promotionId);
+        return new ResponseEntity<>(updatedPromotionDto, HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<Set<PromotionView>> findAllPromotionView() {
+        final Set<PromotionView> foundAllPromotionViewSet = this.promotionService.findAllPromotionView();
+
+        if(!foundAllPromotionViewSet.isEmpty())
+            return new ResponseEntity<>(foundAllPromotionViewSet, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     @DeleteMapping(value = "/{promotionId}")
-    public ResponseEntity<HttpStatus> deleteProductPromotionById(@PathVariable Long productId, @PathVariable Long promotionId) {
-        this.promotionService.deleteProductPromotionById(productId, promotionId);
+    @PreAuthorize(value = "hasRole('MODERATOR')")
+    public ResponseEntity<HttpStatus> deletePromotionById(@PathVariable Long promotionId) {
+        this.promotionService.deletePromotionById(promotionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

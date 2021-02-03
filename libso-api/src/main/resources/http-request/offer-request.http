@@ -28,8 +28,12 @@ Authorization: Bearer {{auth_token}}
   }
 }
 
-### Find offer by category id
-GET http://localhost:8080/libso/offers/categories/1
+### Find offer set
+GET http://localhost:8080/libso/offers
+Authorization: Bearer {{auth_token}}
+
+### Find offer by id
+GET http://localhost:8080/libso/offers/1
 Authorization: Bearer {{auth_token}}
 
 ### Delete product

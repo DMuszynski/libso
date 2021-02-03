@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -27,4 +28,11 @@ public class Offer extends AbstractEntity {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
     private Product product;
+
+    @OneToMany(mappedBy = "offer")
+    private Set<Purchase> purchases;
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

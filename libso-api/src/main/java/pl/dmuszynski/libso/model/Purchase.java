@@ -1,18 +1,31 @@
 package pl.dmuszynski.libso.model;
 
-import lombok.experimental.SuperBuilder;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-@Data
 @Entity
+@Getter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class Purchase extends AbstractEntity {
 
-    private int selectedQuantity;
+    private int productsAmount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
+
+    public void setProductsAmount(int productsAmount) {
+        this.productsAmount = productsAmount;
+    }
 }

@@ -4,7 +4,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.dmuszynski.libso.repository.TokenRepository;
 import pl.dmuszynski.libso.service.TokenService;
-import pl.dmuszynski.libso.service.MailService;
+import pl.dmuszynski.libso.service.MessageService;
 import pl.dmuszynski.libso.model.Token;
 import pl.dmuszynski.libso.model.User;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class TokenServiceImpl implements TokenService {
 
     private final TokenRepository tokenRepository;
-    private final MailService mailService;
+    private final MessageService messageService;
 
     @Override
     public Token findByValue(String value) {
@@ -32,11 +32,7 @@ public class TokenServiceImpl implements TokenService {
         final String mailContent = "Wymagane potwierdzenie rejestracji. Aby aktywować konto kliknij w poniższy link: \n"
             + "http://localhost:8080/libso/token?value=" + userToken.getValue();
 
-        try {
-            this.mailService.sendMail(user.getEmail(), mailSubject, mailContent, true);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        this.messageService.sendMessage(user.getEmail(), mailSubject, mailContent, true);
     }
 
     private Token generateNewUserToken(User user) {

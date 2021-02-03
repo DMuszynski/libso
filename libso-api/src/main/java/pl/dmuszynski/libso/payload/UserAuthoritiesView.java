@@ -8,5 +8,6 @@ import java.util.Set;
 
 @Projection(name = "userAuthoritiesView", types = User.class)
 public interface UserAuthoritiesView extends EntityView {
+    boolean isLocked();
     Set<AuthorityDTO> getAuthorities();
 }

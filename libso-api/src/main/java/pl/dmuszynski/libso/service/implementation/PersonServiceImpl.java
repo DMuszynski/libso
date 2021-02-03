@@ -64,7 +64,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PersonView findUserPersonViewById(Long personId) {
         return this.personRepository.findUserPersonViewById(personId)
-            .orElseThrow(() -> new ResourceNotFoundException("Person not found for this id: " + personId));
+            .orElseThrow(() -> new ResourceNotFoundException("Nie dodałeś żadnych danych personalnych !"));
     }
 
     @Override

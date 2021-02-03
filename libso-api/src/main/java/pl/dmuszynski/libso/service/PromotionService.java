@@ -1,9 +1,13 @@
 package pl.dmuszynski.libso.service;
 
+import pl.dmuszynski.libso.payload.PromotionView;
 import pl.dmuszynski.libso.payload.dto.PromotionDTO;
 
+import java.util.Set;
+
 public interface PromotionService {
-    PromotionDTO createProductPromotion(PromotionDTO productPromotionDetails, Long productId);
-    PromotionDTO updateProductPromotionById(PromotionDTO productPromotionDetails, Long productId, Long promotionId);
-    void deleteProductPromotionById(Long productId, Long promotionId);
+    PromotionDTO createPromotion(PromotionDTO promotionDetails);
+    PromotionDTO updatePromotionById(PromotionDTO promotionDetails, Long promotionId);
+    Set<PromotionView> findAllPromotionView();
+    void deletePromotionById(Long promotionId);
 }

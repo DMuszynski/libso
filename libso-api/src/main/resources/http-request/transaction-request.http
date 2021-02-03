@@ -1,0 +1,3 @@
+### Find transaction
+GET http://localhost:8080/libso/users/21/transactions
+Authorization: Bearer {{auth_token}}

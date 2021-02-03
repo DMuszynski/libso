@@ -20,6 +20,9 @@ mvnw.cmd
 *.iml
 *.ipr
 
+### Angular ###
+/libso-ng-app/node_modules
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

@@ -9,6 +9,6 @@ import java.util.Set;
 public interface CategoryService {
     CategoryDTO createCategory(CategoryDTO categoryDetails);
     CategoryDTO updateCategoryById(CategoryDTO categoryDetails, Long categoryId);
-    Set<CategoryView> findAllCategoryDto(int page, int size, String sortBy);
+    Set<CategoryView> findAllCategoryDto();
     void deleteCategoryById(Long categoryId);
 }

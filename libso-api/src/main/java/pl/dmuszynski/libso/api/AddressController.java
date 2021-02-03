@@ -14,6 +14,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @PreAuthorize(value = "hasRole('USER')")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "libso/users/{userId}/addresses")
 public class AddressController {
 
@@ -31,6 +32,11 @@ public class AddressController {
         return new ResponseEntity<>(updatedAddressDto, HttpStatus.OK);
     }
 
+    @PatchMapping(value = "/{addressId}/delivery")
+    public ResponseEntity<AddressView> updateUserAddressDeliveryById(@RequestBody AddressDTO userAddressDetails, @PathVariable Long userId, @PathVariable Long addressId) {
+        final AddressDTO updatedAddressDto = this.addressService.updateUserAddressDeliveryById(userAddressDetails, userId,  addressId);
+        return new ResponseEntity<>(updatedAddressDto, HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<Set<AddressView>> findAllAddressesViewByUserId(@PathVariable Long userId) {
         final Set<AddressView> foundUserAddressesViewSet = this.addressService.findAllAddressesViewByUserId(userId);

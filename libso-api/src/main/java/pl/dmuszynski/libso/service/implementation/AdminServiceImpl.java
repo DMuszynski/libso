@@ -1,7 +1,6 @@
 package pl.dmuszynski.libso.service.implementation;
 
 import pl.dmuszynski.libso.payload.dto.UserAuthoritiesDTO;
-import pl.dmuszynski.libso.payload.dto.UserLockedDTO;
 import pl.dmuszynski.libso.payload.AuthorizedUserView;
 import pl.dmuszynski.libso.repository.AdminRepository;
 import pl.dmuszynski.libso.validator.AdminValidator;
@@ -11,9 +10,6 @@ import pl.dmuszynski.libso.mapper.AuthorityMapper;
 import pl.dmuszynski.libso.model.AuthorityType;
 import pl.dmuszynski.libso.model.Authority;
 import pl.dmuszynski.libso.model.User;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
@@ -35,15 +31,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    public UserLockedDTO updateUserLockedById(UserLockedDTO userLockedDetails, Long userId) {
-        this.adminValidator.validateModelAndModelDtoIds(userId, userLockedDetails.getId());
-        this.adminRepository.updateUserLockedById(userLockedDetails.isLocked(), userId);
-
-        return userLockedDetails;
-    }
-
-    @Override
-    @Transactional
     public UserAuthoritiesDTO updateUserAuthoritiesById(UserAuthoritiesDTO userAuthoritiesDetails, Long userId) {
         this.adminValidator.validateModelAndModelDtoIds(userId, userAuthoritiesDetails.getId());
         final Set<Authority> foundUserAuthorities = userAuthoritiesDetails.getAuthorities().stream()
@@ -52,17 +39,16 @@ public class AdminServiceImpl implements AdminService {
                 .findByAuthorityType(AuthorityType.valueOf(authority.getAuthority())))
             .collect(Collectors.toSet());
 
-        this.entityManager.getReference(User.class, userId)
-            .setAuthorities(foundUserAuthorities);
+        final User user = this.entityManager.getReference(User.class, userId);
+        user.setAuthorities(foundUserAuthorities);
+        user.setLocked(userAuthoritiesDetails.isLocked());
+
         return userAuthoritiesDetails;
     }
 
     @Override
-    public Set<AuthorizedUserView> findAllAuthorizedUserView(int page, int size, String sortBy) {
-        final Pageable paging = PageRequest.of(page, size, Sort.by(sortBy));
-        final var foundUserList = this.adminRepository
-            .findAllAuthorizedUserViewBy(paging).getContent();
-
-        return new HashSet<>(foundUserList);
+    public Set<AuthorizedUserView> findAllAuthorizedUserView() {
+        return new HashSet<>(this.adminRepository
+            .findAllAuthorizedUserViewBy());
     }
 }

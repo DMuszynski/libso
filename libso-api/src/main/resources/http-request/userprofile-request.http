@@ -18,6 +18,10 @@ Authorization: Bearer {{auth_token}}
   "email" : "libso.user2@gmail.com"
 }
 
+### Find user
+GET http://localhost:8080/libso/users/1
+Authorization: Bearer {{auth_token}}
+
 ### Delete user
-DELETE http://localhost:8080/libso/users/1
+DELETE http://localhost:8080/libso/users/21
 Authorization: Bearer {{auth_token}}

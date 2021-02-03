@@ -35,9 +35,12 @@ public class AddressServiceImpl implements AddressService {
             Address.builder()
                 .user(entityManager.getReference(User.class, userId))
                 .country(userAddressDetails.getCountry())
+                .province(userAddressDetails.getProvince())
                 .location(userAddressDetails.getLocation())
                 .zipCode(userAddressDetails.getZipCode())
                 .street(userAddressDetails.getStreet())
+                .apartmentNumber(userAddressDetails.getApartmentNumber())
+                .deliveryAddress(userAddressDetails.isDeliveryAddress())
                 .build()
         );
 
@@ -53,13 +56,26 @@ public class AddressServiceImpl implements AddressService {
                 .id(addressId)
                 .user(this.entityManager.getReference(User.class, userId))
                 .country(userAddressDetails.getCountry())
+                .province(userAddressDetails.getProvince())
                 .location(userAddressDetails.getLocation())
                 .zipCode(userAddressDetails.getZipCode())
                 .street(userAddressDetails.getStreet())
+                .apartmentNumber(userAddressDetails.getApartmentNumber())
+                .deliveryAddress(userAddressDetails.isDeliveryAddress())
                 .build()
             );
 
         return this.addressMapper.mapToDTO(updatedUserAddress);
+    }
+
+    @Override
+    @Transactional
+    public AddressDTO updateUserAddressDeliveryById(AddressDTO userAddressDetails, Long userId, Long addressId) {
+        final Address deliveryAddress = this.addressRepository.findAddressByDeliveryAddressTrueAndUserId(userId);
+        this.addressRepository.updateDeliveryAddressByAddressId(false, deliveryAddress.getId());
+        this.addressRepository.updateDeliveryAddressByAddressId(true, addressId);
+
+        return userAddressDetails;
     }
 
     @Override
